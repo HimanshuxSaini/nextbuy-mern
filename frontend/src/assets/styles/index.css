@@ -825,3 +825,182 @@ table td, table th {
   transform: translateY(-2px) scale(1.02) !important;
   box-shadow: 0 12px 30px rgba(245, 158, 11, 0.4) !important;
 }
+
+/* Filter Section and Advanced UI Elements */
+.filter-card {
+  border-radius: 20px !important;
+  background: #ffffff !important;
+  border: 1px solid #f1f5f9 !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.03) !important;
+  overflow: visible !important;
+}
+
+.filter-header {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #0f172a;
+  letter-spacing: -0.3px;
+}
+
+.filter-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #64748b;
+  margin-bottom: 15px;
+}
+
+.price-range-slider {
+  margin: 10px 0 20px 0;
+}
+
+.range-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.range-inputs .form-control {
+  padding: 8px 12px !important;
+  font-size: 0.9rem !important;
+  text-align: center;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #475569;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.filter-option:hover, .filter-option.active {
+  background: rgba(245, 158, 11, 0.08);
+  color: #d97706;
+  transform: translateX(4px);
+}
+
+.filter-option.active {
+  font-weight: 700;
+  background: rgba(245, 158, 11, 0.12);
+}
+
+/* Ratings filter specific */
+.rating-filter-row {
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.rating-filter-row:hover {
+  background: #f8fafc;
+}
+
+.clear-btn {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+}
+
+.clear-btn:hover {
+  color: #ef4444;
+}
+
+/* Smooth Entrance Skeleton */
+.skeleton-box {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(-90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%);
+  background-size: 400% 400%;
+  animation: shimmer 1.5s infinite ease-out;
+  border-radius: 12px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.hover-scale-sm {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-scale-sm:hover {
+  transform: scale(1.03);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Product Sort Dropdown Premium Styling */
+.premium-select {
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  font-weight: 600 !important;
+  color: #475569 !important;
+  cursor: pointer;
+  padding: 8px 35px 8px 15px !important;
+  font-size: 0.9rem !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.premium-select:focus {
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15) !important;
+}
+
+/* Empty Cart & Enhanced UX */
+.empty-cart-container {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+.empty-cart-icon-wrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+
+.delete-cart-btn:hover {
+  background: rgba(220, 53, 69, 0.1) !important;
+  transform: scale(1.1);
+  transition: all 0.2s ease;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.hover-warning:hover {
+  color: #ffc107 !important;
+  transform: translateX(-5px);
+}
+
+.hover-link:hover {
+  color: #ffc107 !important;
+}
+

@@ -1,30 +1,59 @@
 import Product from '../models/productModel.js';
 import { deleteFile } from '../utils/file.js';
 
-// @desc     Fetch All Products
+// @desc     Fetch All Products with Filtering and Sorting
 // @method   GET
-// @endpoint /api/v1/products?limit=2&skip=0
+// @endpoint /api/v1/products?limit=2&skip=0&category=...&minPrice=...&maxPrice=...&rating=...&sort=...
 // @access   Public
 const getProducts = async (req, res, next) => {
   try {
-    const total = await Product.countDocuments();
-    const maxLimit = process.env.PAGINATION_MAX_LIMIT;
-    const maxSkip = total === 0 ? 0 : total - 1;
+    const maxLimit = process.env.PAGINATION_MAX_LIMIT || 12;
     const limit = Number(req.query.limit) || maxLimit;
     const skip = Number(req.query.skip) || 0;
     const search = req.query.search || '';
+    const category = req.query.category || '';
+    const minPrice = Number(req.query.minPrice) || 0;
+    const maxPrice = Number(req.query.maxPrice) || Number.MAX_SAFE_INTEGER;
+    const rating = Number(req.query.rating) || 0;
+    const sort = req.query.sort || 'createdAt'; // default sort
 
-    const products = await Product.find({
-      name: { $regex: search, $options: 'i' }
-    })
+    // Build query object
+    const query = {
+      price: { $gte: minPrice, $lte: maxPrice },
+      rating: { $gte: rating }
+    };
+
+    // Add search regex if provided
+    if (search) {
+      query.name = { $regex: search, $options: 'i' };
+    }
+
+    // Add category filter if provided and not "All"
+    if (category && category !== 'All') {
+      query.category = category;
+    }
+
+    // Handle sorting options
+    let sortOptions = {};
+    if (sort === 'priceAsc') {
+      sortOptions = { price: 1 };
+    } else if (sort === 'priceDesc') {
+      sortOptions = { price: -1 };
+    } else if (sort === 'ratingDesc') {
+      sortOptions = { rating: -1 };
+    } else {
+      sortOptions = { createdAt: -1 }; // Newest first default
+    }
+
+    const total = await Product.countDocuments(query);
+    const maxSkip = total === 0 ? 0 : total - 1;
+
+    const products = await Product.find(query)
+      .sort(sortOptions)
       .limit(limit > maxLimit ? maxLimit : limit)
       .skip(skip > maxSkip ? maxSkip : skip < 0 ? 0 : skip);
 
-    if (!products || products.length === 0) {
-      res.statusCode = 404;
-      throw new Error('Products not found!');
-    }
-
+    // NOTE: Do not throw 404 if empty results, just send empty array to handle frontend filtering gracefully
     res.status(200).json({
       products,
       total,

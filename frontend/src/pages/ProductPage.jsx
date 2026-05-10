@@ -17,6 +17,7 @@ import {
 } from '../slices/productsApiSlice';
 import { addToCart } from '../slices/cartSlice';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 import Rating from '../components/Rating';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -79,7 +80,12 @@ const ProductPage = () => {
           {error?.data?.message || error.error}
         </Message>
       ) : (
-        <div className="product-details-page-wrapper animate-fade-in">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="product-details-page-wrapper animate-fade-in"
+        >
           <Link to='/' className='btn btn-dark btn-back-custom my-4 px-3 py-2 d-inline-flex align-items-center gap-2'>
             <FaArrowLeft /> Go Back
           </Link>
@@ -87,9 +93,14 @@ const ProductPage = () => {
           <Row className="gy-4">
             {/* Product Image Section */}
             <Col lg={5} md={6}>
-              <div className="product-details-img-container p-4 text-center">
+              <motion.div 
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="product-details-img-container p-4 text-center"
+              >
                 <Image src={product.image} alt={product.name} fluid className="product-details-img" />
-              </div>
+              </motion.div>
               <Row className='review d-none d-md-block mt-4'>
                 <Col>
                   <Reviews
@@ -132,63 +143,69 @@ const ProductPage = () => {
 
             {/* Checkout Widget Card */}
             <Col lg={3} md={12}>
-              <Card className="checkout-widget-card border-0 shadow-sm p-4">
-                <ListGroup variant='flush' className="bg-transparent">
-                  <ListGroup.Item className="bg-transparent px-0 pt-0 d-flex justify-content-between align-items-center pb-3">
-                    <span className="text-muted">Price</span>
-                    <span className="font-weight-bold h4 mb-0 text-dark">{addCurrency(product.price)}</span>
-                  </ListGroup.Item>
-                  
-                  <ListGroup.Item className="bg-transparent px-0 d-flex justify-content-between align-items-center py-3">
-                    <span className="text-muted">Status</span>
-                    <span>
-                      {product.countInStock > 0 ? (
-                        <span className="badge bg-success-light text-success d-inline-flex align-items-center gap-1">
-                          <FaCheckCircle /> In Stock
-                        </span>
-                      ) : (
-                        <span className="badge bg-danger-light text-danger d-inline-flex align-items-center gap-1">
-                          <FaTimesCircle /> Out Of Stock
-                        </span>
-                      )}
-                    </span>
-                  </ListGroup.Item>
-
-                  {product.countInStock > 0 && (
-                    <ListGroup.Item className="bg-transparent px-0 py-3 d-flex justify-content-between align-items-center">
-                      <span className="text-muted">Quantity</span>
-                      <Form.Control
-                        as='select'
-                        value={qty}
-                        onChange={e => setQty(Number(e.target.value))}
-                        className="qty-selector-select"
-                        style={{ width: '80px' }}
-                      >
-                        {Array.from(
-                          { length: product.countInStock },
-                          (_, i) => (
-                            <option key={i + 1} value={i + 1}>
-                              {i + 1}
-                            </option>
-                          )
-                        )}
-                      </Form.Control>
+              <motion.div
+                 initial={{ x: 20, opacity: 0 }}
+                 animate={{ x: 0, opacity: 1 }}
+                 transition={{ delay: 0.3 }}
+              >
+                <Card className="checkout-widget-card border-0 shadow-sm p-4">
+                  <ListGroup variant='flush' className="bg-transparent">
+                    <ListGroup.Item className="bg-transparent px-0 pt-0 d-flex justify-content-between align-items-center pb-3">
+                      <span className="text-muted">Price</span>
+                      <span className="font-weight-bold h4 mb-0 text-dark">{addCurrency(product.price)}</span>
                     </ListGroup.Item>
-                  )}
+                    
+                    <ListGroup.Item className="bg-transparent px-0 d-flex justify-content-between align-items-center py-3">
+                      <span className="text-muted">Status</span>
+                      <span>
+                        {product.countInStock > 0 ? (
+                          <span className="badge bg-success-light text-success d-inline-flex align-items-center gap-1">
+                            <FaCheckCircle /> In Stock
+                          </span>
+                        ) : (
+                          <span className="badge bg-danger-light text-danger d-inline-flex align-items-center gap-1">
+                            <FaTimesCircle /> Out Of Stock
+                          </span>
+                        )}
+                      </span>
+                    </ListGroup.Item>
 
-                  <ListGroupItem className="bg-transparent px-0 pb-0 pt-3">
-                    <Button
-                      className='w-100 py-3 font-weight-bold d-flex align-items-center justify-content-center gap-2 btn-add-cart-large'
-                      variant='warning'
-                      type='button'
-                      disabled={product.countInStock === 0}
-                      onClick={addToCartHandler}
-                    >
-                      <FaShoppingCart /> Add To Cart
-                    </Button>
-                  </ListGroupItem>
-                </ListGroup>
-              </Card>
+                    {product.countInStock > 0 && (
+                      <ListGroup.Item className="bg-transparent px-0 py-3 d-flex justify-content-between align-items-center">
+                        <span className="text-muted">Quantity</span>
+                        <Form.Control
+                          as='select'
+                          value={qty}
+                          onChange={e => setQty(Number(e.target.value))}
+                          className="qty-selector-select"
+                          style={{ width: '80px' }}
+                        >
+                          {Array.from(
+                            { length: product.countInStock },
+                            (_, i) => (
+                              <option key={i + 1} value={i + 1}>
+                                {i + 1}
+                              </option>
+                            )
+                          )}
+                        </Form.Control>
+                      </ListGroup.Item>
+                    )}
+
+                    <ListGroupItem className="bg-transparent px-0 pb-0 pt-3">
+                      <Button
+                        className='w-100 py-3 font-weight-bold d-flex align-items-center justify-content-center gap-2 btn-add-cart-large'
+                        variant='warning'
+                        type='button'
+                        disabled={product.countInStock === 0}
+                        onClick={addToCartHandler}
+                      >
+                        <FaShoppingCart /> Add To Cart
+                      </Button>
+                    </ListGroupItem>
+                  </ListGroup>
+                </Card>
+              </motion.div>
             </Col>
           </Row>
 
@@ -206,7 +223,7 @@ const ProductPage = () => {
               />
             </Col>
           </Row>
-        </div>
+        </motion.div>
       )}
     </>
   );
