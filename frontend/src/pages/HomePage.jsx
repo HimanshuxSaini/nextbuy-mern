@@ -193,7 +193,7 @@ const HomePage = () => {
         {/* Main Content Area */}
         <Col lg={9} md={8}>
           {/* Header Controls Row */}
-          <div className="d-flex flex-wrap justify-content-between align-items-center mb-4 bg-white p-3 rounded shadow-sm">
+          <div className="d-flex flex-wrap justify-content-between align-items-center mb-4 p-3 rounded-4 shadow-sm" style={{ background: 'rgba(255, 255, 255, 0.65)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255, 255, 255, 0.4)' }}>
             <div>
               <h4 className="font-weight-bold text-dark mb-1">
                 {search ? `Results for "${search}"` : category === 'All' ? 'Latest Collection' : category}

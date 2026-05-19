@@ -45,7 +45,7 @@ const Product = ({ product }) => {
               className='product-img'
               alt={product.name}
               loading="lazy"
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.1, rotate: 2 }}
               transition={{ type: 'spring', stiffness: 300 }}
             />
           </div>
